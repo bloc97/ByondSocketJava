@@ -5,8 +5,10 @@
  */
 package byondsocket;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 /**
@@ -32,7 +34,11 @@ public class ByondSocket {
             out.write(parsePacket("?status"));
             out.flush();
             System.out.println("Sent.");
-            String back = in.readUTF();
+            String back = "";
+            back += in.readChar();
+            while (in.available() > 0) {
+                back += (char)in.readByte();
+            }
             System.out.println(back);
             System.out.println("End");
 
